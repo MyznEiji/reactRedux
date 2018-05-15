@@ -1,35 +1,57 @@
-// webpackの設定ファイル
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var publidDir = __dirname + '/public';
-module.exports = {
-  // 元となるファイル(コンパイルする)
-  entry: [
-    './src/index.js'
-  ],
-  output: {
-    // outputはどこに吐き出すか
-    path: publidDir,
-    // publicPathで,bundle.jsにアクセスがあったらentryのファイルを返す
-    publicPath: '/',
-    filename: 'bundle.js'
+const publidDir = path.join(__dirname, '/public');
+module.exports = [
+  {
+    entry: [
+      './src/index.js',
+    ],
+    output: {
+      path: publidDir,
+      publicPath: '/',
+      filename: 'bundle.js',
+    },
+    module: {
+      loaders: [{
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015'],
+        },
+      }],
+    },
+    resolve: {
+      extensions: ['.js', '.jsx'],
+    },
+    devServer: {
+      historyApiFallback: true,
+      contentBase: publidDir,
+    },
   },
-  module: {
-        rules: [{
-          exclude: /node_modules/,
-          loader: 'babel-loader',
-          query: {
-            presets: ['react', 'es2015'],
-          },
-        }],
-      },
-  resolve: {
-    // entryからインポートされたライブラリを検索する拡張子を指定している
-    extensions: ['.js', '.jsx']
+  {
+    entry: {
+      style: './stylesheets/index.scss',
+    },
+    output: {
+      path: publidDir,
+      publicPath: '/',
+      filename: 'bundle.css',
+    },
+    module: {
+      loaders: [
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }),
+        },
+        {
+          test: /\.scss$/,
+          loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!sass-loader' }),
+        },
+      ],
+    },
+    plugins: [
+      new ExtractTextPlugin('bundle.css'),
+    ],
   },
-  devServer: {
-    // webpackDevServerの設定
-    historyApiFallback: true,
-    // contentBaseがドキュメントルートになる
-    contentBase: publidDir
-  }
-};
+];
