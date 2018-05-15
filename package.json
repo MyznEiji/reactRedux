@@ -5,6 +5,9 @@
   "repository": "https://github.com/MyznEiji/reactRedux.git",
   "author": "MyznEiji <em711th@icloud.com>",
   "license": "MIT",
+  "scripts": {
+      "start": "./node_modules/.bin/webpack-dev-server"
+    },
   "dependencies": {
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",

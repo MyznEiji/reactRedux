@@ -9,6 +9,7 @@ module.exports = {
   output: {
     // outputはどこに吐き出すか
     path: publidDir,
+    // publicPathで,bundle.jsにアクセスがあったらentryのファイルを返す
     publicPath: '/',
     filename: 'bundle.js'
   },
