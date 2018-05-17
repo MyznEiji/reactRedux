@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import SearchForm from './searchForm';
+import GeocodeResult from './GeocodeResult';
 
 // function App(props){
 //   return (<div>Hello From Functional App</div>);
@@ -26,6 +27,11 @@ class App extends Component{
       <div>
         <h1>緯度経度検索</h1>
         <SearchForm onSubmit={place => this.handlePlaceSubmit(place)} />
+        <GeocodeResult
+          address={this.state.address}
+          lat={this.state.lat}
+          lng={this.state.lng}
+        />
       </div>
     );
   }
