@@ -8,4 +8,5 @@ body
   color: $text-color;
 }
 
-@import './geocodeResult.scss'
+@import './geocodeResult.scss';
+@import './Map';
